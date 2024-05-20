@@ -14,12 +14,12 @@ export default function Examples() {
     <section id="examples">
       <h2>Examples</h2>
       <menu>
-        {/* Dyanmically listing TabButton */}
+        {/* Dynamically listing TabButton and directly forwarding onClick to TabButton*/}
         {concepts.map((concept) => (
           <TabButton
             key={concept}
             isSelected={Button === concept}
-            onSelect={() => handleSelect(concept)}
+            onClick={() => handleSelect(concept)}
           >
             {concept.slice(0, 1).toUpperCase() + concept.slice(1)}
           </TabButton>
