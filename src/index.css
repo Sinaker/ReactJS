@@ -52,6 +52,18 @@ main h2 {
 #core-concepts li {
   width: 10rem;
   text-align: center;
+
+  /* My Styles */
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  padding: 0.7rem 0.3rem;
+  padding-bottom: 0;
+  border-radius: 1rem;
+  transition: border-color 0.2s linear;
+}
+
+#core-concepts li:hover {
+  border-color: rgb(161, 161, 6);
 }
 
 #core-concepts li img {
