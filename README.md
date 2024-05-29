@@ -1,4 +1,4 @@
 # React Projects
 ---
 
-This repository consists of some projects I've tried to implement using ReactJS. Mostly this is a practice on my Git/Github skills.
+This repository consists of some projects I've tried to implement using ReactJS. Mostly this is a practice on my Git/Github skills. Explore the branches to checkout different projects.
