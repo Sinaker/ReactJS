@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const inputs = [
   ["Initial Investment", "Annual Investment"],
   ["Expected Return", "Duration"],
@@ -12,16 +10,7 @@ const inputKeys = {
   Duration: "duration",
 };
 
-export default function UserInput({ inputVal, setInputVal }) {
-  function handleChange(inputID, value) {
-    console.log(inputID + " = " + value);
-    setInputVal((prevVal) => {
-      return {
-        ...prevVal,
-        [inputID]: value,
-      };
-    });
-  }
+export default function UserInput({ inputVal, onChange }) {
   return (
     <section id="user-input">
       {inputs.map((lines) => (
@@ -35,8 +24,8 @@ export default function UserInput({ inputVal, setInputVal }) {
                 id={input}
                 step="0.01"
                 value={inputVal[inputKeys[input]]}
-                onChange={(event) =>
-                  handleChange(inputKeys[input], event.target.value)
+                onChange={
+                  (event) => onChange(inputKeys[input], event.target.value) //By default event.target.value is a string, hence dealing this in handler function
                 }
               />
             </p>

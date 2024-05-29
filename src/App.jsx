@@ -5,15 +5,25 @@ import Results from "./Components/Results";
 
 function App() {
   const [inputVal, setInputVal] = useState({
-    initialInvestment: 10000.0,
-    annualInvestment: 1200.0,
-    expectedReturn: 6.0,
-    duration: 10.0,
+    initialInvestment: 0.0,
+    annualInvestment: 0.0,
+    expectedReturn: 0.0,
+    duration: 0.0,
   });
+
+  function handleChange(inputID, value) {
+    //Value is a string from event.target.value
+    setInputVal((prevVal) => {
+      return {
+        ...prevVal,
+        [inputID]: value ? parseFloat(value) : 0,
+      };
+    });
+  }
   return (
     <>
       <Header />
-      <UserInput inputVal={inputVal} setInputVal={setInputVal} />
+      <UserInput inputVal={inputVal} onChange={handleChange} />
       <Results inputVals={inputVal} />
     </>
   );

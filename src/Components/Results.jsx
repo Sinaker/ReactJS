@@ -5,7 +5,7 @@ const titles = [
   "Investment Value",
   "Interest(Year)",
   "Total Interest",
-  "Invested Captial",
+  "Invested Capital",
 ];
 export default function Results({ inputVals }) {
   const res = Object.values(inputVals).every((value) => value && value > 0)
@@ -13,20 +13,19 @@ export default function Results({ inputVals }) {
     : null; //Calculate only if all values in object are non-null positive numbers
 
   const rows = [];
+  let totalInterest = 0;
+  let investedCapital = inputVals["initialInvestment"];
   for (let i = 0; res && i < res.length; i++) {
-    res[i]["interest"] += i - 1 < 0 ? 0 : res[i - 1]["interest"]; //Cumulative Interest
-    res[i]["annualInvestment"] +=
-      i - 1 < 0
-        ? inputVals["initialInvestment"]
-        : res[i - 1]["annualInvestment"];
+    totalInterest += res[i].interest;
+    investedCapital += res[i].annualInvestment;
 
     rows.push(
       <tr key={i}>
         <td>{res[i]["year"]}</td>
         <td>{formatter.format(res[i]["valueEndOfYear"])}</td>
         <td>{formatter.format(res[i]["interest"])}</td>
-        <td>{formatter.format(res[i]["interest"])}</td>
-        <td>{formatter.format(res[i]["annualInvestment"])}</td>
+        <td>{formatter.format(totalInterest)}</td>
+        <td>{formatter.format(investedCapital)}</td>
       </tr>
     );
   }
@@ -40,7 +39,7 @@ export default function Results({ inputVals }) {
         </tr>
       </thead>
 
-      {rows.map((row) => row)}
+      <tbody>{rows.map((row) => row)}</tbody>
     </table>
   );
 }
