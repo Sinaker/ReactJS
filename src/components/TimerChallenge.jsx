@@ -10,7 +10,6 @@ export default function TimerChallenge({ title, targetTime }) {
   if (timeRemaining <= 0) {
     clearInterval(timer.current);
     dialog.current.open(); //You lost
-    setTimeRemaining(targetTime * 1000); //If I don't put this timeRemaining will always be <=0 executing an inf loop (cuz of setState)
   }
 
   function startTimer() {
@@ -20,15 +19,23 @@ export default function TimerChallenge({ title, targetTime }) {
     }, 10);
   }
 
+  function resetTimer() {
+    setTimeRemaining(targetTime * 1000); //Reset target time
+  }
+
   function stopTimer() {
     dialog.current.open(); //Manually pressed stop button
     clearInterval(timer.current);
-    setTimeRemaining(targetTime * 1000); //Reset target time
   }
 
   return (
     <>
-      <ResultsWindow ref={dialog} targetTime={targetTime} result="lost" />
+      <ResultsWindow
+        ref={dialog}
+        targetTime={targetTime}
+        timeRemaining={timeRemaining}
+        reset={resetTimer}
+      />
       <section className="challenge">
         <h2>{title}</h2>
         {timeRemaining <= 0 ? <p>You lost</p> : ""}

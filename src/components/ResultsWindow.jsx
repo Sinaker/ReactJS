@@ -1,7 +1,7 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
 
 const ResultsWindow = forwardRef(function ResultsWindow(
-  { result, targetTime },
+  { timeRemaining, targetTime, reset },
   ref
 ) {
   const dialog = useRef();
@@ -12,9 +12,17 @@ const ResultsWindow = forwardRef(function ResultsWindow(
       },
     };
   });
+  const userLost = timeRemaining <= 0;
+  const score = ((targetTime * 1000 - timeRemaining) / 10).toFixed(2);
   return (
     <dialog ref={dialog} className="result-modal">
-      <h2>You {result}</h2>
+      {userLost ? (
+        <h2>You Lost</h2>
+      ) : (
+        <h2>
+          Your Score: <strong style={{ color: "#10655b" }}>{score}</strong>
+        </h2>
+      )}
       <p>
         The target time was{" "}
         <strong>
@@ -22,9 +30,11 @@ const ResultsWindow = forwardRef(function ResultsWindow(
         </strong>
       </p>
       <p>
-        You stopped the timer with <strong>X seconds left.</strong>
+        You stopped the timer with{" "}
+        <strong>{timeRemaining / 1000} seconds left.</strong>
       </p>
-      <form method="dialog">
+      <form method="dialog" onSubmit={reset} onClose={reset}>
+        {/* We will reset timer on pressing 'Cancel' in dialog box */}
         <button>Close</button>
       </form>
     </dialog>
