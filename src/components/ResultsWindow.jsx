@@ -1,4 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
+import { createPortal } from "react-dom"; //Basically teleports code from one place to another
 
 const ResultsWindow = forwardRef(function ResultsWindow(
   { timeRemaining, targetTime, reset },
@@ -14,8 +15,8 @@ const ResultsWindow = forwardRef(function ResultsWindow(
   });
   const userLost = timeRemaining <= 0;
   const score = ((targetTime * 1000 - timeRemaining) / 10).toFixed(2);
-  return (
-    <dialog ref={dialog} className="result-modal">
+  return createPortal(
+    <dialog ref={dialog} className="result-modal" onClose={reset}>
       {userLost ? (
         <h2>You Lost</h2>
       ) : (
@@ -33,11 +34,12 @@ const ResultsWindow = forwardRef(function ResultsWindow(
         You stopped the timer with{" "}
         <strong>{timeRemaining / 1000} seconds left.</strong>
       </p>
-      <form method="dialog" onSubmit={reset} onClose={reset}>
+      <form method="dialog" onSubmit={reset}>
         {/* We will reset timer on pressing 'Cancel' in dialog box */}
         <button>Close</button>
       </form>
-    </dialog>
+    </dialog>,
+    document.querySelector("#modal") //Second parameter is the element where portal should lead to
   );
 });
 
